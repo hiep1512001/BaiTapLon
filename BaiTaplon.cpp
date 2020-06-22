@@ -8,7 +8,7 @@ typedef struct book_st{
 	int giatien; 
 }Sach;
 
-int Nhap(Sach *bookList ){
+void Nhap(Sach *bookList ){
 	int i;
 	for( i=0; i<3; i++){
 		printf("Nhap quyen sach %d:\n", i+1) ;
