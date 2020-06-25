@@ -26,7 +26,7 @@ void Nhap(Sach *bookList ){
 void Sapxep(Sach bookList[]){
 //Sap xep theo the loai tu Z->A 
 	for ( int i= 0; i<2 ; i++) {
-		for (  int j=1; j<3; j++){
+		for (  int j=; j<3; j++){
 			if( strcmp((bookList[i]).theloai,bookList[j].theloai)==-1) {
 			Sach t=bookList[i];
 			bookList[i]=bookList[j];
@@ -60,10 +60,12 @@ void Ghivaotaptin(Sach *bookList){
 	FILE *o = fopen("D:\\book.dat","wb");
 	int i;
 	  if(o == NULL) printf("Loi nhap file");
-	  else {fwrite(bookList, sizeof(Sach),1,o);
-	   
+	  else {
+	  for(int i=0; i<3; i++){
+	  fwrite(bookList, sizeof(Sach),1,o);
+	  }
 	  printf("\nNhap file thanh cong!");
-	} fclose(o);
+	 fclose(o);
 }
 
 void Timkiem(Sach bookList[]){
