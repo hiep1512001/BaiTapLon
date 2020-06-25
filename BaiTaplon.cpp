@@ -25,9 +25,8 @@ void Nhap(Sach *bookList ){
 
 void Sapxep(Sach bookList[]){
 //Sap xep theo the loai tu Z->A 
-int i, j;
-	for ( i= 0; i<2 ; i++) {
-		for (  j=1; j<3; j++){
+	for ( int i= 0; i<2 ; i++) {
+		for (  int j=1; j<3; j++){
 			if( strcmp((bookList[i]).theloai,bookList[j].theloai)==-1) {
 			Sach t=bookList[i];
 			bookList[i]=bookList[j];
@@ -36,37 +35,29 @@ int i, j;
 		} 
 	}
 	printf("STT||Ten                 ||The loai            ||Gia tien            \n");
-	for ( i=0; i<3; i++){
+	for ( int i=0; i<3; i++){
 		printf("%0.3d||%-20s||%-20s||%d\n",i+1,(bookList[i]).ten,(bookList[i]).theloai,(bookList[i]).giatien);  
 	}
 //Thong ke the loai sach 
-	int t=0,x=0; 
-	for(i=0; i<2; i++){
-		if(strcmp(bookList[0].theloai,bookList[i+1].theloai)==0){
-			t=t+1; 
-		} 
-	}
-	for(j=2;j>0;j--){
-		if(strcmp(bookList[2].theloai,bookList[j-1].theloai)==0) 
-		x=x+1; 
-	} 
-	if(t==2){
-	printf("%s co 3 quyen sach\n",bookList[0].theloai);
-	}
-	if(t==1){
-		printf("%s co 2 quyen sach\n%s co 1 quyen sach\n",bookList[0].theloai,bookList[2].theloai); 
-	} 
-	 if(t==0){
-		if(x==0){
-			printf("%s co 1 quyen sach\n%s co 1 quyen sach\n%s co 1 quyen sach\n",bookList[0].theloai,bookList[1].theloai,bookList[2].theloai); 
+    int b[3];
+    for(int i=0; i< 3; i++) b[i]=1;
+    for (int i=0; i<3; i++){
+    	if(b[i]==1){
+    		b[i]=0;
+    		int t=1;
+    		for (int j=i+1; j<3;j++){
+    			if(strcmp(bookList[i].theloai,bookList[j].theloai)==0){
+    				t=t+1;
+    				b[j]=0;
+				}
+			}
+			printf("%s co %d quyen sach\n",bookList[i].theloai,t);
 		}
-		if(x==1){
-			printf("%s co 1 quyen sach\n%s co 2 quyen sach\n",bookList[0].theloai,bookList[2].theloai); 
-		} 
-	} 	
-} 
+	} 
+}
+
 void Ghivaotaptin(Sach *bookList){
-	FILE *o = fopen("\\BaitapLon\\book.dat","wb");
+	FILE *o = fopen("D:\\book.dat","wb");
 	int i;
 	  if(o == NULL) printf("Loi nhap file");
 	  else {fwrite(bookList, sizeof(Sach),1,o);
@@ -74,8 +65,7 @@ void Ghivaotaptin(Sach *bookList){
 	  printf("\nNhap file thanh cong!");
 	} fclose(o);
 }
-	
-  
+
 void Timkiem(Sach bookList[]){
 	char Tentheloai[30];
 	printf("Nhap the loai can tim vao: ");
@@ -99,9 +89,9 @@ void Timkiem(Sach bookList[]){
          }
     }
 }
-void Menu(Sach bookList[]){
+
+void Menu(Sach bookList[], int t){
 	system("cls");
-	
 	printf("\n\t==========================================MENU===================================================\n");
 	printf("\t||1. Nhap du lieu cua tung quyen sach.                                                         ||\n");
 	printf("\t||2. Sap xep, thong ke va hien thi thong tin chi tiet cua tung quyen sach theo the loai (Z->A).||\n");
@@ -111,29 +101,37 @@ void Menu(Sach bookList[]){
 	printf("\t=================================================================================================\n");
 	int x; 
 	do {
-		
 	 printf(" \nNhap su lua chon: ");
      scanf("%d",&x); 
 	switch(x) { 
 		case 1:{
 		    Nhap(bookList);
-			getch(); 
-			return Menu(bookList);
+		    t=1 ;
+			getch();
+			return Menu(bookList,t);
 	   }
         case 2:{
+        	if(t==1){
         	Sapxep(bookList);
+        }
+        else printf("Phai thuc hien su lua chon 1 truoc !\n"); 
 			getch();
-			return Menu(bookList); 
+			return Menu(bookList,t);
 		} 
 		case 3:{
-			Timkiem(bookList) ;
+			if(t==1){
+			Timkiem(bookList);
+		}
+		else printf("Phai thuc hien su lua chon 1 truoc !\n");
 			getch();
-			return Menu(bookList); 
+			return Menu(bookList,t);
 		} 
 		case 4:{
+			if(t==1){
 			Ghivaotaptin(bookList);
+		}else printf("Phai thuc hien su lua chon 1 truoc !\n");
 			getch(); 
-			return Menu(bookList);
+			return Menu(bookList,t);
 		} 
 		case 5:{
 			exit(0);
@@ -142,9 +140,11 @@ void Menu(Sach bookList[]){
 	    } 
 		} while( x<=5);
 } 
+
 int main(){
-	Sach *bookList= (Sach*) malloc ( 3* sizeof(Sach)) ;
-	Menu(bookList);
+	Sach *bookList= (Sach*) malloc ( 3* sizeof(Sach));
+	int t=0;
+	Menu(bookList,t);
 	getch();
 	free(bookList); 
 }
