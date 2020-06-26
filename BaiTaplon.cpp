@@ -26,7 +26,7 @@ void Nhap(Sach *bookList ){
 void Sapxep(Sach bookList[]){
 //Sap xep theo the loai tu Z->A 
 	for ( int i= 0; i<2 ; i++) {
-		for (  int j=1; j<3; j++){
+		for (  int j=i; j<3; j++){
 			if( strcmp((bookList[i]).theloai,bookList[j].theloai)==-1) {
 			Sach t=bookList[i];
 			bookList[i]=bookList[j];
@@ -60,10 +60,13 @@ void Ghivaotaptin(Sach *bookList){
 	FILE *o = fopen("D:\\book.dat","wb");
 	int i;
 	  if(o == NULL) printf("Loi nhap file");
-	  else {fwrite(bookList, sizeof(Sach),1,o);
-	   
+	  else {
+	  for(int i=0; i<3; i++){
+	  fwrite(bookList+i, sizeof(Sach),1,o);
+	  }
 	  printf("\nNhap file thanh cong!");
-	} fclose(o);
+	 fclose(o);
+}
 }
 
 void Timkiem(Sach bookList[]){
@@ -92,7 +95,7 @@ void Timkiem(Sach bookList[]){
 
 void Menu(Sach bookList[], int t){
 	system("cls");
-	printf("\n\t==========================================MENU===================================================\n");
+	printf("\n\t============================================MENU=================================================\n");
 	printf("\t||1. Nhap du lieu cua tung quyen sach.                                                         ||\n");
 	printf("\t||2. Sap xep, thong ke va hien thi thong tin chi tiet cua tung quyen sach theo the loai (Z->A).||\n");
 	printf("\t||3. Tim quyen sach theo the loai.                                                             ||\n");
